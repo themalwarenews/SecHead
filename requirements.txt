@@ -1,0 +1,4 @@
+requests==2.29.0
+termcolor==2.3.0
+urllib3==1.26.15
+prettytable==3.7.0
