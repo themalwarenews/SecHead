@@ -24,7 +24,7 @@ Installing SecHead
 
 -  with "-d" option
 
-![Screenshot 2023-05-02 at 11 54 25 AM](https://user-images.githubusercontent.com/100226024/235593922-8d91c3e4-8345-4c14-962a-b53cffbba2cd.png)
+![image](https://github.com/themalwarenews/SecHead/assets/100226024/737fb521-7e05-48c9-8b5c-d5be33c721ac)
 
 -  with "-f" option
 
