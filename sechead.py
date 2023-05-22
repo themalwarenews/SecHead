@@ -1,3 +1,4 @@
+import argparse
 import requests
 from termcolor import colored
 from urllib.parse import urlparse
@@ -35,11 +36,6 @@ def print_headers(headers, color):
         table.add_row([colored(header, color), description])
     print(table)
 
-def printgrade(grade, color):
-    table = PrettyTable(["Grade"])
-    table.add_row([colored(grade,color)])
-    print(table)
-
 def get_grade(used_headers):
     num_headers = len(SECURITY_HEADERS)
     num_used_headers = len(used_headers)
@@ -57,8 +53,38 @@ def get_grade(used_headers):
     else:
         return "F"
 
+def process_url(url):
+    # Check if the URL has a scheme (e.g. "https://")
+    parsed_url = urlparse(url)
+    if not parsed_url.scheme:
+        # If not, add "https://" to the beginning of the URL
+        url = "https://" + url
+
+    try:
+        used_headers, missing_headers = analyze_security_headers(url)
+
+        print("\nDomain:", url)
+        print("\nUsed security headers:")
+        print_headers(used_headers, "green")
+
+        print("\nMissing security headers:")
+        print_headers(missing_headers, "red")
+
+        grade = get_grade(used_headers)
+        print("\n\n")
+        print("\t\t\t+---------------------+-----------------------+")
+        print(colored(f"\t\t\t\tThe Grade of website is : {grade}","blue"))
+        print("\t\t\t+---------------------+-----------------------+")
+
+    except requests.exceptions.RequestException as e:
+        print(f"Error: {e}")
+
 def main():
-    # Print fancy banner
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-d', '--domain', type=str, help='Single domain to analyze')
+    parser.add_argument('-f', '--file', type=str, help='File with a list of domains to analyze')
+    args = parser.parse_args()
+
     print(colored("""
   ____  __________   ____         ____    _____________        _     ________   
  6MMMMb\`MMMMMMMMM  6MMMMb/       `MM'    `MM`MMMMMMMMM       dM.    `MMMMMMMb. 
@@ -74,32 +100,13 @@ MYMMMM9 _MMMMMMMMM  YMMMM9        _MM_    _MM_MMMMMMMMM _dM_     _dMM_MMMMMMM9'
                                                                                 
                                                     
 """, "green"))
-
-    url = input("Enter the URL: ")
-
-    # Check if the URL has a scheme (e.g. "https://")
-    parsed_url = urlparse(url)
-    if not parsed_url.scheme:
-        # If not, add "https://" to the beginning of the URL
-        url = "https://" + url
-
-    try:
-        used_headers, missing_headers = analyze_security_headers(url)
-
-        print("\nUsed security headers:")
-        print_headers(used_headers, "green")
-
-        print("\nMissing security headers:")
-        print_headers(missing_headers, "red")
-
-        grade = get_grade(used_headers)
-        ##printgrade(grade,"blue")
-        print("\n\n")
-        print("\t\t\t+---------------------+-----------------------+")
-        print(colored(f"\t\t\t\tThe Grade of website is : {grade}","blue"))
-        print("\t\t\t+---------------------+-----------------------+")
-    except requests.exceptions.RequestException as e:
-        print(f"Error: {e}")
+    if args.domain:
+        process_url(args.domain)
+    elif args.file:
+        with open(args.file) as file:
+            for line in file:
+                process_url(line.strip())
+                print(colored("\n" + "="*120 + "\n","cyan"))  # Separator line
 
 if __name__ == "__main__":
     main()
