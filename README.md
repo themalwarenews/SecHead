@@ -3,7 +3,7 @@
 
 - Sechead works by analyzing the HTTP response headers of a website and checking for the presence of various security headers, such as Content-Security-Policy (CSP), X-XSS-Protection, X-Content-Type-Options, and more. If any of these headers are missing or misconfigured, Sechead will flag them as potential security risks and provide detailed information on how to fix them.
 
-- One of the key benefits of Sechead is its ease of use. The tool is designed to be simple and intuitive, even for users with little to no experience in security auditing. All users need to do is enter the URL of the website they want to audit, and Sechead will take care of the rest, providing a comprehensive report on the security headers of the site.
+- One of the key benefits of Sechead is its ease of use. The tool is designed to be simple and intuitive, even for users with little to no experience in security auditing. All users need to do is enter the URL of the website they want to audit or text file with list of domains, and Sechead will take care of the rest, providing a comprehensive report on the security headers of the site.
 
 - Overall, Sechead is an essential tool for anyone looking to ensure the security and protection of their website. With its powerful features, user-friendly interface, and comprehensive reporting capabilities, Sechead is a must-have tool for any security-conscious website owner or developer.
 
@@ -20,7 +20,17 @@ Installing SecHead
     
 ## Sample Run 
 
+#### Syntax : python3 sechead.py [ -d or -f ] [ domain or file name]
+
+-  with "-d" option
+
 ![Screenshot 2023-05-02 at 11 54 25 AM](https://user-images.githubusercontent.com/100226024/235593922-8d91c3e4-8345-4c14-962a-b53cffbba2cd.png)
+
+-  with "-f" option
+
+ ![image](https://github.com/themalwarenews/SecHead/assets/100226024/1a3c944c-29b8-464e-9be1-44d1781074ed)
+
+
 
   Feel free to notify us for any errors :slightly_smiling_face:
   
